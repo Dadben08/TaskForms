@@ -1,4 +1,4 @@
-ask Management App
+Task Management App
 📘 Description
 
 A simple task management app where users can add and view tasks. It includes user authentication and connects the frontend to a backend for data storage.
