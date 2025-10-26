@@ -12,7 +12,7 @@ const Dashboard = () => {
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/tasks", {
+      const res = await axios.get("https://taskform-backend.onrender.com/api/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
