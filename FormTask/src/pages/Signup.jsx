@@ -16,7 +16,7 @@ const Signup = () => {
     setLoading(true);
     setError("");
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post("https://taskform-backend.onrender.com/api/auth/register", {
         email,
         password,
       });
