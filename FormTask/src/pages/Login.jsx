@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const res = await axios.post("https://taskform-backend.onrender.com/api/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials");
     } finally {
