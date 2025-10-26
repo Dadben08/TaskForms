@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // ✅ import context
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ use context function
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,8 +18,15 @@ const Login = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("https://taskform-backend.onrender.com/api/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
+      const res = await axios.post(
+        "https://taskform-backend.onrender.com/api/auth/login",
+        { email, password }
+      );
+
+      // ✅ use the context login function
+      login(res.data.user, res.data.token);
+
+      // ✅ navigate instantly
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials");
@@ -36,7 +45,6 @@ const Login = () => {
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
-    
         <div className="mb-3">
           <label htmlFor="email" className="block text-gray-700 mb-1">
             Email Address
@@ -50,7 +58,6 @@ const Login = () => {
           />
         </div>
 
-        
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 mb-1">
             Password
@@ -73,7 +80,7 @@ const Login = () => {
         </button>
 
         <p className="text-sm mt-3 text-center">
-          Don't have an account?{" "}
+          Don’t have an account?{" "}
           <Link to="/signup" className="text-blue-500 hover:underline">
             Signup
           </Link>
